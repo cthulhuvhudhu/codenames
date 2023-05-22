@@ -1,5 +1,6 @@
 package codenames
 
+import org.apache.coyote.Response
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam
 @RestController
 @RequestMapping("/api/games")
 class CodenamesController(private val codenamesService: CodenamesService) {
-    // TODO filter so identity is only visible for isVisible (RBAC?)
 
     @GetMapping("/new")
     fun createNewGame(): ResponseEntity<String> {
@@ -31,10 +31,15 @@ class CodenamesController(private val codenamesService: CodenamesService) {
         return ResponseEntity.ok(codenamesService.getGame(gameId))
     }
 
+    @GetMapping("/all")
+    fun getAllGames(): ResponseEntity<List<GameData>> {
+        return ResponseEntity.ok(codenamesService.getGames())
+    }
+
+    // TODO differentiate get views for spymaster, team
     @GetMapping
     fun getGame(@RequestParam gameId: String): ResponseEntity<GameData> {
-        val gameData = codenamesService.getGame(gameId)
-        return ResponseEntity.ok(gameData)
+        return ResponseEntity.ok(codenamesService.getGame(gameId))
     }
 
     @PostMapping("/clue")

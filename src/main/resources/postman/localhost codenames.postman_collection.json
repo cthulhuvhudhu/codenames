@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "f8b9c074-1603-40da-aa81-57466f56d4bd",
+		"name": "localhost codenames",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21779321"
+	},
+	"item": [
+		{
+			"name": "NewGame",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/games/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"games",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getGame",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/games/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"games",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getGames",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/games/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"games",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "startGame",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/games/start?gameId=64549107-2236-4eab-8a34-dae5b313ed15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"games",
+						"start"
+					],
+					"query": [
+						{
+							"key": "gameId",
+							"value": "64549107-2236-4eab-8a34-dae5b313ed15"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "giveClue",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"clueString\": \"asdf\",\n    \"clueNum\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/games/clue?gameId=64549107-2236-4eab-8a34-dae5b313ed15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"games",
+						"clue"
+					],
+					"query": [
+						{
+							"key": "gameId",
+							"value": "64549107-2236-4eab-8a34-dae5b313ed15"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "makeGuess",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/games/guess?guess=love&gameId=64549107-2236-4eab-8a34-dae5b313ed15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"games",
+						"guess"
+					],
+					"query": [
+						{
+							"key": "guess",
+							"value": "love"
+						},
+						{
+							"key": "gameId",
+							"value": "64549107-2236-4eab-8a34-dae5b313ed15"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clearGames",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"clueString\": \"pies\",\n    \"clueNum\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/games",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"games"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

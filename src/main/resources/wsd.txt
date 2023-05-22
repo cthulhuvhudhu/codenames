@@ -1,0 +1,117 @@
+title Code Names
+
+alt Create game
+    User -> Frontend: Opens the game in the browser
+    Frontend -> Backend: Sends a request to create a new game
+    Backend -> Backend: Generates a game ID
+    Backend -> Database: Creates a new game and stores it in the database
+    Backend --> Frontend: Returns game ID to frontend
+    Frontend -> Backend: Sends a request to start the game with the given game ID
+    Backend -> Database: Get game data by ID
+    Database --> Backend: Returns game data
+    Backend -> Backend: Randomly selects a team to start the game
+    Backend -> Backend: Generates a board with a random set of words and assigns a Team to each word
+    Backend -> Database: Save
+    Backend --> Frontend: Sends the board and game data to the frontend
+    Frontend --> User: Displays the board and game data to the user
+end
+alt Spymaster gives clue
+    User -> Frontend: Current team's Spymaster provides one word clue and a number
+    Frontend -> Backend: Sends a request with the clue data and game ID
+    Backend -> Database: Saves
+    Backend --> Frontend: Returns game data
+    Frontend --> User: Displays clue
+end
+alt Game Play
+# alt Game play
+    loop while guesses successful and guess < clue # +1
+        User -> Frontend: Guessing team provides one word guess
+        Frontend -> Backend: Sends a request with the guessed word and game ID
+        Backend -> Database: Get game data by ID
+        Database --> Backend: Returns game data
+        Backend -> Backend: Evaluate guess
+        opt Continue Guessing
+            note left of Backend
+                Correct guess
+            end note
+            Backend -> Backend: Decrement # guesses left
+            Backend -> Backend: Decrement # agents left
+            note left of Backend
+                guesses left  > 0
+                agents left > 0
+            end note
+            Backend -> Database: Saves
+            Backend --> Frontend: Success response, updated game Data
+            Frontend --> User: Displays success, guess again
+        end
+        opt Switch Teams: correct guess
+            note left of Backend
+                Correct guess
+            end note
+            Backend -> Backend: Decrement # guesses left
+            Backend -> Backend: Decrement # agents left
+            note left of Backend
+                guesses left = 0
+                agents left > 0
+            end note
+            Backend -> Backend: Switch teams
+            Backend -> Database: Saves
+            Backend --> Frontend: Returns game data
+            Frontend --> User: Displays change in turn, game data
+        end
+        opt Game Over: Team wins
+            note left of Backend
+                Correct guess
+            end note
+            Backend -> Backend: Decrement # guesses left
+            Backend -> Backend: Decrement # agents left
+            note left of Backend
+                guesses left = 0
+                agents left = 0
+            end note
+            Backend -> Backend: Update to game over state [team wins]
+            Backend -> Database: Saves
+            Backend --> Frontend: Returns game data
+            Frontend --> User: Displays game over, data
+        end
+        opt Game Over: assassin
+            note left of Backend
+                Bad guess : Assassin
+            end note
+            Backend -> Backend: Update to game over state [opponent wins]
+            Backend -> Database: Saves
+            Backend --> Frontend: Returns game data
+            Frontend --> User: Displays game over, data
+        end
+        opt bad guess, opponent
+            note left of Backend
+                Bad guess : Opponent
+            end note
+            Backend -> Backend: Decrement # guesses left
+            Backend -> Backend: Backend -> Backend: Decrement # (opponent) agents left
+            opt Game Over: Opponent Wins
+                note left of Backend
+                    opp agents left = 0
+                end note
+                Backend -> Backend: Update to game over state [opponent wins]
+            end
+            opt Switch Teams: Bad Guess
+                note left of Backend
+                    opp agents left > 0
+                end note
+                Backend -> Backend: Switch teams
+            end
+            Backend -> Database: Saves
+            Backend --> Frontend: Returns game data
+            Frontend --> User: Displays game over, data
+        end
+        opt Switch Teams: Guess Citizen
+            Backend -> Backend: Switch teams
+            Backend -> Database: Saves
+            Backend --> Frontend: Returns game data
+            Frontend --> User: Displays game over, data
+        end
+    end
+end
+
+# www.websequencediagrams.com
