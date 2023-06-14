@@ -32,7 +32,7 @@ repositories {
 dependencies {
     // Use the Kotlin JUnit 5 integration.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-//    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     // Use the JUnit 5 integration.
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")
@@ -52,7 +52,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("codenames.App")
+    mainClass.set("codenames.AppKt")
 }
 
 tasks.named<Test>("test") {
