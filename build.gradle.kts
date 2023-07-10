@@ -43,6 +43,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+
     // Pegged for int with Atlas
     implementation("org.mongodb:mongodb-driver-sync:4.8.1")
     implementation ("io.github.microutils:kotlin-logging-jvm:3.0.5")

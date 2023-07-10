@@ -1,6 +1,6 @@
 # Use an appropriate base image with Java and Gradle installed
 FROM eclipse-temurin:17.0.7_7-jre
-g
+
 # Set the working directory inside the container
 WORKDIR /app
 

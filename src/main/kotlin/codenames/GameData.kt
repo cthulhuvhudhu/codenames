@@ -55,4 +55,13 @@ data class Turn(
     var guessesLeft: Int,
     var correct: Boolean?,
     val createdAt: LocalDateTime = LocalDateTime.now(),
-)
+) {
+    override fun equals(other: Any?)
+        = (other is Turn)
+        && team == other.team
+        && clueString == other.clueString
+        && guessString == other.guessString
+        && clueNum == other.clueNum
+        && guessesLeft == other.guessesLeft
+        && correct == other.correct
+}
