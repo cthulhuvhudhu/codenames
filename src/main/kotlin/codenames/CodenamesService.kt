@@ -67,7 +67,7 @@ class CodenamesService(
     }
 
     fun getGame(gameId: String): GameData? {
-        return gameDataRepository.findById(gameId).orElse(null)
+        return gameDataRepository.findById(gameId).get()
     }
 
     internal fun saveGameData(gameData: GameData): GameData {

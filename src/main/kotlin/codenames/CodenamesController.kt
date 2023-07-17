@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam
 @RequestMapping("/api/games")
 class CodenamesController(private val codenamesService: CodenamesService) {
 
-    @GetMapping("/new")
+    @PostMapping("/new")
     fun createNewGame(): ResponseEntity<String> {
         val gameId = codenamesService.createNewGame()
         return ResponseEntity.ok(gameId)
@@ -61,8 +61,8 @@ class CodenamesController(private val codenamesService: CodenamesService) {
     }
 
     @DeleteMapping
-    fun clearGames(): ResponseEntity.HeadersBuilder<*> {
+    fun clearGames(): ResponseEntity<Any> {
         codenamesService.clear()
-        return ResponseEntity.noContent()
+        return ResponseEntity.noContent().build()
     }
 }

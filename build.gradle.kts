@@ -33,6 +33,7 @@ dependencies {
     // Use the Kotlin JUnit 5 integration.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("com.ninja-squad:springmockk:3.0.1")
 
     // Use the JUnit 5 integration.
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")
@@ -47,7 +48,6 @@ dependencies {
     // Pegged for int with Atlas
     implementation("org.mongodb:mongodb-driver-sync:4.8.1")
     implementation ("io.github.microutils:kotlin-logging-jvm:3.0.5")
-//    implementation (group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.6')
 
 }
 
