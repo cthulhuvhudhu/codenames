@@ -1,12 +1,12 @@
 package codenames
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.mongodb.MongoTimeoutException
-import org.junit.jupiter.api.Test
-
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
@@ -56,11 +56,6 @@ internal class CodenamesControllerTest(@Autowired val mockMvc: MockMvc) {
     }
 
     @Test
-    fun getGameSpyview() {
-        assert(0==1)
-    }
-
-    @Test
     fun `test getting game data by ID`() {
         // Mocking the service behavior
         val gameId = "game-123"
@@ -94,12 +89,35 @@ internal class CodenamesControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun giveClue() {
-        assert(0==1)
+        // TODO test bad Clues
+        val gameId = "game123"
+        val clue = Clue("clue", 1)
+        every { codenamesService.giveClue(gameId, clue) } returns GameData()
+
+        val mapper = ObjectMapper()
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false)
+
+        val requestJson = mapper.writer().writeValueAsString(clue)
+        mockMvc.perform(post("/api/games/clue?gameId=$gameId").contentType(
+            MediaType(MediaType.APPLICATION_JSON)
+        ).content(requestJson))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
     }
 
     @Test
     fun makeGuess() {
-        assert(0==1)
+        // TODO test badguesses
+        val gameId = "game123"
+        val guess = "guess"
+        every { codenamesService.makeGuess(gameId, guess) } returns GameData()
+
+
+        mockMvc.perform(post("/api/games/guess?guess=$guess&gameId=$gameId").contentType(
+            MediaType(MediaType.APPLICATION_JSON)
+        ))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
     }
 
     @Test

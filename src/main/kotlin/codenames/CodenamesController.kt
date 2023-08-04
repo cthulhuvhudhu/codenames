@@ -26,17 +26,11 @@ class CodenamesController(private val codenamesService: CodenamesService) {
         return ResponseEntity.ok(gameData)
     }
 
-    @GetMapping("/spy")
-    fun getGameSpyview(@RequestParam gameId: String): ResponseEntity<GameData> {
-        return ResponseEntity.ok(codenamesService.getGame(gameId))
-    }
-
     @GetMapping("/all")
     fun getAllGames(): ResponseEntity<List<GameData>> {
         return ResponseEntity.ok(codenamesService.getGames())
     }
 
-    // TODO differentiate get views for spymaster, team
     @GetMapping
     fun getGame(@RequestParam gameId: String): ResponseEntity<GameData> {
         return ResponseEntity.ok(codenamesService.getGame(gameId))
