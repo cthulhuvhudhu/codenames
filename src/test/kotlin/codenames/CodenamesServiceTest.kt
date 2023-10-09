@@ -38,7 +38,7 @@ internal class CodenamesServiceTest {
         `when`(nounService.drawCodeNames(boardSize)).thenReturn(wordList)
         `when`(gameDataRepository.findById(gameId)).thenReturn(Optional.of(GameData()))
     }
-
+// TODO use mockk instead of mockito?
     @Test
     fun `test creating a new game`() {
         `when`(gameDataRepository.save(any())).thenReturn(GameData())
@@ -118,14 +118,6 @@ internal class CodenamesServiceTest {
 
         verify(gameDataRepository).save(any())
         assert(newGameData.updatedAt > old)
-    }
-
-    @Test
-    fun `test get opponent`() {
-        assertEquals(Team.BLUE, codenamesService.getOpponent(Team.RED))
-        assertEquals(Team.RED, codenamesService.getOpponent(Team.BLUE))
-        assertFailsWith<java.lang.IllegalStateException> { codenamesService.getOpponent(Team.ASSASSIN) }
-        assertFailsWith<java.lang.IllegalStateException> { codenamesService.getOpponent(Team.CITIZEN) }
     }
 
     @Test

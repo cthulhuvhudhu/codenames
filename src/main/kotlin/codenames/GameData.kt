@@ -33,7 +33,13 @@ enum class Team {
     RED,
     BLUE,
     ASSASSIN,
-    CITIZEN
+    CITIZEN;
+
+    fun getOpponent(): Team {
+        if (this == RED) return BLUE
+        if (this == BLUE) return RED
+        throw IllegalArgumentException()
+    }
 }
 
 data class Card(

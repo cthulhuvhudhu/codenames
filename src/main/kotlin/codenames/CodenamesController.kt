@@ -1,6 +1,5 @@
 package codenames
 
-import org.apache.coyote.Response
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam
 @RequestMapping("/api/games")
 class CodenamesController(private val codenamesService: CodenamesService) {
 
-    @GetMapping("/new")
+    @PostMapping("/new")
     fun createNewGame(): ResponseEntity<String> {
         val gameId = codenamesService.createNewGame()
         return ResponseEntity.ok(gameId)
@@ -26,17 +25,11 @@ class CodenamesController(private val codenamesService: CodenamesService) {
         return ResponseEntity.ok(gameData)
     }
 
-    @GetMapping("/spy")
-    fun getGameSpyview(@RequestParam gameId: String): ResponseEntity<GameData> {
-        return ResponseEntity.ok(codenamesService.getGame(gameId))
-    }
-
     @GetMapping("/all")
     fun getAllGames(): ResponseEntity<List<GameData>> {
         return ResponseEntity.ok(codenamesService.getGames())
     }
 
-    // TODO differentiate get views for spymaster, team
     @GetMapping
     fun getGame(@RequestParam gameId: String): ResponseEntity<GameData> {
         return ResponseEntity.ok(codenamesService.getGame(gameId))
@@ -61,8 +54,8 @@ class CodenamesController(private val codenamesService: CodenamesService) {
     }
 
     @DeleteMapping
-    fun clearGames(): ResponseEntity.HeadersBuilder<*> {
+    fun clearGames(): ResponseEntity<Any> {
         codenamesService.clear()
-        return ResponseEntity.noContent()
+        return ResponseEntity.noContent().build()
     }
 }
