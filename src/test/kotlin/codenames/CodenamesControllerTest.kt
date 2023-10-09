@@ -89,7 +89,6 @@ internal class CodenamesControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun giveClue() {
-        // TODO test bad Clues
         val gameId = "game123"
         val clue = Clue("clue", 1)
         every { codenamesService.giveClue(gameId, clue) } returns GameData()
@@ -107,7 +106,6 @@ internal class CodenamesControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun makeGuess() {
-        // TODO test badguesses
         val gameId = "game123"
         val guess = "guess"
         every { codenamesService.makeGuess(gameId, guess) } returns GameData()

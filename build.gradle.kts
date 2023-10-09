@@ -49,6 +49,11 @@ dependencies {
     implementation("org.mongodb:mongodb-driver-sync:4.8.1")
     implementation ("io.github.microutils:kotlin-logging-jvm:3.0.5")
 
+    // Testing
+    testImplementation("org.testcontainers:mongodb:1.18.3")
+    testImplementation("org.testcontainers:testcontainers:1.18.3")
+    testImplementation("org.testcontainers:junit-jupiter:1.17.6")
+
 }
 
 application {

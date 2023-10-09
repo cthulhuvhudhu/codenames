@@ -121,14 +121,6 @@ internal class CodenamesServiceTest {
     }
 
     @Test
-    fun `test get opponent`() {
-        assertEquals(Team.BLUE, codenamesService.getOpponent(Team.RED))
-        assertEquals(Team.RED, codenamesService.getOpponent(Team.BLUE))
-        assertFailsWith<java.lang.IllegalStateException> { codenamesService.getOpponent(Team.ASSASSIN) }
-        assertFailsWith<java.lang.IllegalStateException> { codenamesService.getOpponent(Team.CITIZEN) }
-    }
-
-    @Test
     fun `test give clue`() {
         val gameData = GameData(gameId)
         gameData.gameStatus = GameStatus.IN_PROGRESS

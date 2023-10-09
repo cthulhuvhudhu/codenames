@@ -12,6 +12,6 @@
 ## To Run the Application
 
 1. Execute `gradle clean build` in the project root directory.
-2. Build docker image `docker -t codenames build .` in the `src` directory.
+2. Build docker image: `docker build -t codenames .`
 3. Run docker `docker run -p 8080:8080 --network codenames-net codenames` to use local mongodb
 4. Alternatively, you may substitute a connections string for Atlas in a local.properties file.

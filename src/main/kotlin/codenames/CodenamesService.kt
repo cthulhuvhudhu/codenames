@@ -4,15 +4,16 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import kotlin.random.Random
 import mu.KotlinLogging
+import org.springframework.beans.factory.annotation.Autowired
 
 @Service
-class CodenamesService(
+class CodenamesService @Autowired constructor(
     val gameDataRepository: GameDataRepository,
     val nounService: NounService,
 ) {
     private val logger = KotlinLogging.logger {  }
     private final val boardSize = 25
-    private final val baseNumAgents = 8
+    internal final val baseNumAgents = 8
 
     fun createNewGame(): String {
         logger.debug { "Creating new game" }
@@ -49,7 +50,7 @@ class CodenamesService(
 
     // Generate a board with a set of words and assign a color to each word
     internal fun generateBoard(startTeam: Team): List<Card> {
-        val opponentTeam = getOpponent(startTeam)
+        val opponentTeam = startTeam.getOpponent()
         val listCards = ArrayList<Card>(boardSize)
 
         val words = nounService.drawCodeNames(boardSize)
@@ -75,16 +76,17 @@ class CodenamesService(
         return gameDataRepository.save(gameData)
     }
 
-    internal fun getOpponent(team: Team): Team {
-        check(team == Team.BLUE || team == Team.RED) { "No opponent for $team - Only player teams permitted!" }
-        return if (team == Team.RED) Team.BLUE else Team.RED
-    }
-
     fun giveClue(gameId: String, clue: Clue): GameData {
         // make a turn and save for give clue
         val gameData = getGame(gameId)!!
         check(gameData.gameStatus == GameStatus.IN_PROGRESS) {"Game $gameId is not in progress!"}
         val turn = Turn(gameData.currentTeam!!, clue.clueString, null, clue.clueNum, clue.clueNum+1, null)
+
+        // Can't use words on the board; invalid clue
+        if (gameData.board.find { it.word == clue.clueString } != null) {
+            turn.guessesLeft = 0
+            gameData.currentTeam = gameData.currentTeam!!.getOpponent()
+        }
         gameData.turns.add(turn)
         return saveGameData(gameData)
     }
@@ -100,11 +102,11 @@ class CodenamesService(
         turn.guessesLeft--
         turn.guessString = guess
 
-        val hitCard = gameData.board.filter { !it.isVisible }.filter{ it.word == guess }.firstOrNull()
+        val hitCard = gameData.board.filter { !it.isVisible }.firstOrNull { it.word == guess }
         check(hitCard != null) { "That guess isn't a concealed word on the board. Try again?"}
 
         hitCard.isVisible = true
-        val opponent = getOpponent(gameData.currentTeam!!)
+        val opponent = gameData.currentTeam!!.getOpponent()
 
         if (hitCard.team == gameData.currentTeam) {
             // Correct guess!
