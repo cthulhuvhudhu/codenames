@@ -1,5 +1,8 @@
 # codenames
 
+A kotlin spring API to support a digital version of the card game Codenames.
+See [here](https://www.ultraboardgames.com/codenames/game-rules.php) for rules and description.
+
 ## Setup and run using local mongodb for testing
 1. Setup network `docker network create codenames-net`
 2. Run mongo container ```docker run -d -p 27017:27017 --name codenames-db --network codenames-net \
