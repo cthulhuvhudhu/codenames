@@ -54,7 +54,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/games/new",
+					"raw": "http://localhost:8080/api/games/all",
 					"protocol": "http",
 					"host": [
 						"localhost"
